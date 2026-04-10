@@ -16,44 +16,7 @@ A browser-based tool to merge two JW Library backup (`.jwlibrary`) files into on
 
 ## Live site
 
-Once deployed, your site will be at:
-`https://<your-username>.github.io/<repo-name>/`
-
----
-
-## Setup (one-time, ~5 minutes)
-
-### 1. Create a GitHub repository
-
-Create a new **public** repository on GitHub (private repos require GitHub Pro for Pages).
-
-### 2. Upload these files
-
-Either clone the repo and push, or use GitHub's web UI to upload:
-
-```
-jwl-merge/
-├── index.html
-├── README.md
-└── .github/
-    └── workflows/
-        └── deploy.yml
-```
-
-> **Note:** GitHub's web UI won't let you create `.github/workflows/` directly.
-> Use the UI to create the file at path `.github/workflows/deploy.yml` and GitHub
-> will create the directories automatically.
-
-### 3. Enable GitHub Pages
-
-1. Go to your repo → **Settings** → **Pages**
-2. Under **Source**, select **GitHub Actions**
-3. Save
-
-### 4. Trigger a deployment
-
-Push any commit (or go to **Actions** → **Deploy to GitHub Pages** → **Run workflow**).
-The site will be live at the URL shown in the Pages settings within ~30 seconds.
+https://para0056.github.io/jwl-backup-merge/
 
 ---
 
