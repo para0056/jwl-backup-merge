@@ -89,17 +89,3 @@ The site will be live at the URL shown in the Pages settings within ~30 seconds.
 - Both libraries load from cdnjs on first use (~1 MB total); requires internet access
 - Compatible with JW Library backup schema v14 (tested); validates schema version
   match between the two files before merging
-- The CLI version (`jwl_merge.py`) is a direct Python equivalent if you prefer
-  to run merges locally without a browser
-
----
-
-## CLI tool
-
-`jwl_merge.py` in this repo is the original Python command-line version:
-
-```bash
-python3 jwl_merge.py primary.jwlibrary secondary.jwlibrary output.jwlibrary
-```
-
-Requires Python 3.10+. No dependencies beyond the standard library.
