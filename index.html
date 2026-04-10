@@ -564,7 +564,7 @@ class JWLMerger {
   run() {
     const v1 = this.m1.userDataBackup.schemaVersion;
     const v2 = this.m2.userDataBackup.schemaVersion;
-    if (v1 !== v2) throw new Error(`These two backups are from different app versions (${v1} vs ${v2}). Please update JW Library on both devices and make new backups before merging.`);
+    if (v1 && v2 && v1 !== v2) throw new Error(`These two backups are from different app versions (${v1} vs ${v2}). Please update JW Library on both devices and make new backups before merging.`);
     this.copySchema();
 
     const steps = [
