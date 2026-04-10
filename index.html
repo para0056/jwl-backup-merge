@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,117 +17,170 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/sql-wasm.js"></script>
   <script src="https://unpkg.com/fflate@0.8.2/umd/index.js"></script>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     :root {
-      --bg:             #faf8f5;
-      --white:          #ffffff;
-      --warm-100:       #f5f0e8;
-      --warm-200:       #e8dfd0;
-      --teal:           #2a9d8f;
-      --teal-lt:        #e6f4f2;
-      --teal-dk:        #1f7a6e;
-      --amber:          #e9a82e;
-      --amber-lt:       #fdf3dc;
-      --green:          #4caf84;
-      --green-lt:       #eaf6f0;
-      --red-lt:         #fdecea;
-      --red:            #e05c5c;
-      --text:           #2d2d2d;
-      --muted:          #7a7060;
-      --border:         #e0d9ce;
-      --privacy-text:   #1f6b62;
-      --privacy-bg:     #e6f4f2;
+      --bg: #faf8f5;
+      --white: #ffffff;
+      --warm-100: #f5f0e8;
+      --warm-200: #e8dfd0;
+      --teal: #2a9d8f;
+      --teal-lt: #e6f4f2;
+      --teal-dk: #1f7a6e;
+      --amber: #e9a82e;
+      --amber-lt: #fdf3dc;
+      --green: #4caf84;
+      --green-lt: #eaf6f0;
+      --red-lt: #fdecea;
+      --red: #e05c5c;
+      --text: #2d2d2d;
+      --muted: #7a7060;
+      --border: #e0d9ce;
+      --privacy-text: #1f6b62;
+      --privacy-bg: #e6f4f2;
       --privacy-border: #b2d9d4;
-      --tip-text:       #6b4a10;
-      --tip-bg:         #fdf3dc;
-      --tip-border:     #f0cc7a;
-      --badge-pri:      #8a5e0a;
-      --dl-title:       #1e6e4a;
-      --dl-meta:        #3a8c62;
-      --dl-bg:          #eaf6f0;
-      --dl-border:      #a8dfc4;
-      --log-val:        #1f7a6e;
-      --font:           'Nunito', sans-serif;
-      --radius:         16px;
-      --radius-sm:      10px;
+      --tip-text: #6b4a10;
+      --tip-bg: #fdf3dc;
+      --tip-border: #f0cc7a;
+      --badge-pri: #8a5e0a;
+      --dl-title: #1e6e4a;
+      --dl-meta: #3a8c62;
+      --dl-bg: #eaf6f0;
+      --dl-border: #a8dfc4;
+      --log-val: #1f7a6e;
+      --font: 'Nunito', sans-serif;
+      --radius: 16px;
+      --radius-sm: 10px;
     }
 
     /* ── Dark mode — system preference ── */
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg:             #1a1814;
-        --white:          #232018;
-        --warm-100:       #2a2520;
-        --warm-200:       #36302a;
-        --teal-lt:        #0d2e2b;
-        --teal-dk:        #5ecfc1;
-        --amber-lt:       #2a2010;
-        --green-lt:       #0d2820;
-        --red-lt:         #2a1212;
-        --text:           #e8e2d8;
-        --muted:          #8a8070;
-        --border:         #3a342c;
-        --privacy-text:   #7dd4cb;
-        --privacy-bg:     #0d2e2b;
+        --bg: #1a1814;
+        --white: #232018;
+        --warm-100: #2a2520;
+        --warm-200: #36302a;
+        --teal-lt: #0d2e2b;
+        --teal-dk: #5ecfc1;
+        --amber-lt: #2a2010;
+        --green-lt: #0d2820;
+        --red-lt: #2a1212;
+        --text: #e8e2d8;
+        --muted: #8a8070;
+        --border: #3a342c;
+        --privacy-text: #7dd4cb;
+        --privacy-bg: #0d2e2b;
         --privacy-border: #1f5e58;
-        --tip-text:       #d4a055;
-        --tip-bg:         #2a2010;
-        --tip-border:     #5a4015;
-        --badge-pri:      #d4a055;
-        --dl-title:       #6ed4a0;
-        --dl-meta:        #4aaa78;
-        --dl-bg:          #0d2820;
-        --dl-border:      #1f5e3e;
-        --log-val:        #5ecfc1;
+        --tip-text: #d4a055;
+        --tip-bg: #2a2010;
+        --tip-border: #5a4015;
+        --badge-pri: #d4a055;
+        --dl-title: #6ed4a0;
+        --dl-meta: #4aaa78;
+        --dl-bg: #0d2820;
+        --dl-border: #1f5e3e;
+        --log-val: #5ecfc1;
       }
     }
 
     /* ── Manual overrides via data-theme on <html> ── */
     [data-theme="light"] {
-      --bg:             #faf8f5;  --white:          #ffffff;
-      --warm-100:       #f5f0e8;  --warm-200:       #e8dfd0;
-      --teal-lt:        #e6f4f2;  --teal-dk:        #1f7a6e;
-      --amber-lt:       #fdf3dc;  --green-lt:       #eaf6f0;
-      --red-lt:         #fdecea;  --text:           #2d2d2d;
-      --muted:          #7a7060;  --border:         #e0d9ce;
-      --privacy-text:   #1f6b62;  --privacy-bg:     #e6f4f2;
-      --privacy-border: #b2d9d4;  --tip-text:       #6b4a10;
-      --tip-bg:         #fdf3dc;  --tip-border:     #f0cc7a;
-      --badge-pri:      #8a5e0a;  --dl-title:       #1e6e4a;
-      --dl-meta:        #3a8c62;  --dl-bg:          #eaf6f0;
-      --dl-border:      #a8dfc4;  --log-val:        #1f7a6e;
+      --bg: #faf8f5;
+      --white: #ffffff;
+      --warm-100: #f5f0e8;
+      --warm-200: #e8dfd0;
+      --teal-lt: #e6f4f2;
+      --teal-dk: #1f7a6e;
+      --amber-lt: #fdf3dc;
+      --green-lt: #eaf6f0;
+      --red-lt: #fdecea;
+      --text: #2d2d2d;
+      --muted: #7a7060;
+      --border: #e0d9ce;
+      --privacy-text: #1f6b62;
+      --privacy-bg: #e6f4f2;
+      --privacy-border: #b2d9d4;
+      --tip-text: #6b4a10;
+      --tip-bg: #fdf3dc;
+      --tip-border: #f0cc7a;
+      --badge-pri: #8a5e0a;
+      --dl-title: #1e6e4a;
+      --dl-meta: #3a8c62;
+      --dl-bg: #eaf6f0;
+      --dl-border: #a8dfc4;
+      --log-val: #1f7a6e;
     }
+
     [data-theme="dark"] {
-      --bg:             #1a1814;  --white:          #232018;
-      --warm-100:       #2a2520;  --warm-200:       #36302a;
-      --teal-lt:        #0d2e2b;  --teal-dk:        #5ecfc1;
-      --amber-lt:       #2a2010;  --green-lt:       #0d2820;
-      --red-lt:         #2a1212;  --text:           #e8e2d8;
-      --muted:          #8a8070;  --border:         #3a342c;
-      --privacy-text:   #7dd4cb;  --privacy-bg:     #0d2e2b;
-      --privacy-border: #1f5e58;  --tip-text:       #d4a055;
-      --tip-bg:         #2a2010;  --tip-border:     #5a4015;
-      --badge-pri:      #d4a055;  --dl-title:       #6ed4a0;
-      --dl-meta:        #4aaa78;  --dl-bg:          #0d2820;
-      --dl-border:      #1f5e3e;  --log-val:        #5ecfc1;
+      --bg: #1a1814;
+      --white: #232018;
+      --warm-100: #2a2520;
+      --warm-200: #36302a;
+      --teal-lt: #0d2e2b;
+      --teal-dk: #5ecfc1;
+      --amber-lt: #2a2010;
+      --green-lt: #0d2820;
+      --red-lt: #2a1212;
+      --text: #e8e2d8;
+      --muted: #8a8070;
+      --border: #3a342c;
+      --privacy-text: #7dd4cb;
+      --privacy-bg: #0d2e2b;
+      --privacy-border: #1f5e58;
+      --tip-text: #d4a055;
+      --tip-bg: #2a2010;
+      --tip-border: #5a4015;
+      --badge-pri: #d4a055;
+      --dl-title: #6ed4a0;
+      --dl-meta: #4aaa78;
+      --dl-bg: #0d2820;
+      --dl-border: #1f5e3e;
+      --log-val: #5ecfc1;
     }
 
     /* ── Theme toggle pill ── */
     .theme-toggle {
-      position: fixed; top: 16px; right: 16px; z-index: 100;
-      display: flex; align-items: center;
-      background: var(--white); border: 1.5px solid var(--border);
-      border-radius: 50px; padding: 4px; gap: 2px;
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 50px;
+      padding: 4px;
+      gap: 2px;
     }
+
     .theme-btn {
-      border: none; background: none; cursor: pointer;
-      font-family: var(--font); font-size: 0.72rem; font-weight: 700;
-      color: var(--muted); padding: 4px 10px; border-radius: 50px;
-      transition: background 0.15s, color 0.15s; white-space: nowrap;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-family: var(--font);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--muted);
+      padding: 4px 10px;
+      border-radius: 50px;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
     }
-    .theme-btn:hover { color: var(--text); }
-    .theme-btn.active { background: var(--teal); color: white; }
+
+    .theme-btn:hover {
+      color: var(--text);
+    }
+
+    .theme-btn.active {
+      background: var(--teal);
+      color: white;
+    }
 
     body {
       font-family: var(--font);
@@ -144,57 +198,118 @@
     }
 
     /* ── Header ── */
-    .header { text-align: center; margin-bottom: 40px; }
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
 
     .logo {
-      display: inline-flex; align-items: center; gap: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       background: var(--white);
       border: 1.5px solid var(--border);
       border-radius: 50px;
       padding: 8px 20px 8px 12px;
       margin-bottom: 20px;
     }
+
     .logo-icon {
-      width: 32px; height: 32px; border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
       background: var(--teal-lt);
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 16px;
     }
-    .logo-text { font-size: 0.9rem; font-weight: 700; color: var(--teal-dk); letter-spacing: 0.02em; }
 
-    h1 { font-size: 1.75rem; font-weight: 700; color: var(--text); margin-bottom: 10px; line-height: 1.25; }
-    .subtitle { font-size: 1rem; color: var(--muted); max-width: 440px; margin: 0 auto 0; }
+    .logo-text {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--teal-dk);
+      letter-spacing: 0.02em;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 440px;
+      margin: 0 auto 0;
+    }
 
     /* ── Privacy note ── */
     .privacy {
-      display: flex; align-items: flex-start; gap: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
       background: var(--privacy-bg);
       border: 1.5px solid var(--privacy-border);
       border-radius: var(--radius-sm);
-      padding: 14px 16px; margin-bottom: 32px;
-      font-size: 0.875rem; color: var(--privacy-text); line-height: 1.55;
+      padding: 14px 16px;
+      margin-bottom: 32px;
+      font-size: 0.875rem;
+      color: var(--privacy-text);
+      line-height: 1.55;
     }
-    .privacy-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+    .privacy-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
 
     /* ── Steps ── */
-    .step { margin-bottom: 28px; }
+    .step {
+      margin-bottom: 28px;
+    }
 
     .step-label {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.08em; color: var(--muted); margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 12px;
     }
+
     .step-num {
-      width: 22px; height: 22px; border-radius: 50%;
-      background: var(--warm-200); color: var(--muted);
-      font-size: 0.72rem; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--warm-200);
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
     }
-    .step-num.active { background: var(--teal); color: white; }
+
+    .step-num.active {
+      background: var(--teal);
+      color: white;
+    }
 
     /* ── File drop zones ── */
-    .drops { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .drops {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
 
     .dz {
       position: relative;
@@ -206,22 +321,76 @@
       text-align: center;
       transition: border-color 0.18s, background 0.18s;
       min-height: 160px;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
-    .dz input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-    .dz:hover, .dz.over { border-color: var(--teal); background: var(--teal-lt); }
-    .dz.loaded { border-style: solid; border-color: var(--green); background: var(--green-lt); }
 
-    .dz-emoji { font-size: 28px; line-height: 1; display: block; }
-    .dz-role {
-      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.08em; padding: 2px 8px; border-radius: 4px;
+    .dz input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
     }
-    .dz-role.primary { background: var(--amber-lt); color: var(--badge-pri); }
-    .dz-role.secondary { background: var(--warm-100); color: var(--muted); }
-    .dz-name { font-weight: 700; font-size: 0.95rem; color: var(--text); }
-    .dz-hint { font-size: 0.82rem; color: var(--muted); }
-    .dz-file { font-size: 0.78rem; font-weight: 600; color: var(--teal-dk); word-break: break-all; }
+
+    .dz:hover,
+    .dz.over {
+      border-color: var(--teal);
+      background: var(--teal-lt);
+    }
+
+    .dz.loaded {
+      border-style: solid;
+      border-color: var(--green);
+      background: var(--green-lt);
+    }
+
+    .dz-emoji {
+      font-size: 28px;
+      line-height: 1;
+      display: block;
+    }
+
+    .dz-role {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .dz-role.primary {
+      background: var(--amber-lt);
+      color: var(--badge-pri);
+    }
+
+    .dz-role.secondary {
+      background: var(--warm-100);
+      color: var(--muted);
+    }
+
+    .dz-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .dz-hint {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .dz-file {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--teal-dk);
+      word-break: break-all;
+    }
 
     /* ── Tip box ── */
     .tip {
@@ -229,662 +398,784 @@
       border: 1.5px solid var(--tip-border);
       border-radius: var(--radius-sm);
       padding: 12px 16px;
-      font-size: 0.83rem; color: var(--tip-text); line-height: 1.55;
+      font-size: 0.83rem;
+      color: var(--tip-text);
+      line-height: 1.55;
       margin-bottom: 28px;
     }
-    .tip strong { font-weight: 700; }
+
+    .tip strong {
+      font-weight: 700;
+    }
 
     /* ── Merge button ── */
     #mergeBtn {
       width: 100%;
       background: var(--teal);
       color: white;
-      border: none; border-radius: var(--radius);
+      border: none;
+      border-radius: var(--radius);
       padding: 16px;
-      font-family: var(--font); font-size: 1.05rem; font-weight: 700;
+      font-family: var(--font);
+      font-size: 1.05rem;
+      font-weight: 700;
       cursor: pointer;
       transition: background 0.15s, transform 0.1s;
       letter-spacing: 0.01em;
     }
-    #mergeBtn:disabled { background: var(--warm-200); color: var(--muted); cursor: not-allowed; }
-    #mergeBtn:not(:disabled):hover { background: var(--teal-dk); }
-    #mergeBtn:not(:disabled):active { transform: scale(0.99); }
+
+    #mergeBtn:disabled {
+      background: var(--warm-200);
+      color: var(--muted);
+      cursor: not-allowed;
+    }
+
+    #mergeBtn:not(:disabled):hover {
+      background: var(--teal-dk);
+    }
+
+    #mergeBtn:not(:disabled):active {
+      transform: scale(0.99);
+    }
 
     /* ── Progress / log ── */
-    .log-wrap { margin-top: 24px; }
+    .log-wrap {
+      margin-top: 24px;
+    }
 
     #log {
       background: var(--white);
       border: 1.5px solid var(--border);
       border-radius: var(--radius-sm);
       padding: 16px 18px;
-      font-size: 0.83rem; line-height: 1.85;
+      font-size: 0.83rem;
+      line-height: 1.85;
       color: var(--muted);
-      max-height: 280px; overflow-y: auto;
+      max-height: 280px;
+      overflow-y: auto;
     }
-    #log::-webkit-scrollbar { width: 5px; }
-    #log::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-    .ll { display: flex; justify-content: space-between; }
-    .ll-name { color: var(--text); }
-    .ll-val  { font-weight: 700; color: var(--log-val); }
-    .log-div { border-top: 1px solid var(--border); margin: 5px 0; }
-    .c-ok  { color: var(--green); font-weight: 600; }
-    .c-err { color: var(--red);   font-weight: 600; }
-    .c-acc { color: var(--teal);  font-weight: 600; }
-    .c-dim { color: var(--muted); }
+    #log::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    #log::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    .ll {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .ll-name {
+      color: var(--text);
+    }
+
+    .ll-val {
+      font-weight: 700;
+      color: var(--log-val);
+    }
+
+    .log-div {
+      border-top: 1px solid var(--border);
+      margin: 5px 0;
+    }
+
+    .c-ok {
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .c-err {
+      color: var(--red);
+      font-weight: 600;
+    }
+
+    .c-acc {
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    .c-dim {
+      color: var(--muted);
+    }
 
     /* ── Download card ── */
-    #dlSection { display: none; margin-top: 20px; }
-    #dlSection.show { display: block; }
+    #dlSection {
+      display: none;
+      margin-top: 20px;
+    }
+
+    #dlSection.show {
+      display: block;
+    }
 
     .dl-card {
       background: var(--dl-bg);
       border: 2px solid var(--dl-border);
       border-radius: var(--radius);
       padding: 20px 22px;
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
-    .dl-title { font-weight: 700; font-size: 1rem; color: var(--dl-title); margin-bottom: 2px; }
-    .dl-meta  { font-size: 0.78rem; color: var(--dl-meta); }
+
+    .dl-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--dl-title);
+      margin-bottom: 2px;
+    }
+
+    .dl-meta {
+      font-size: 0.78rem;
+      color: var(--dl-meta);
+    }
 
     #dlBtn {
-      display: inline-flex; align-items: center; gap: 7px;
-      background: var(--green); color: white;
-      border: none; border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--green);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
       padding: 11px 20px;
-      font-family: var(--font); font-size: 0.9rem; font-weight: 700;
-      text-decoration: none; white-space: nowrap; flex-shrink: 0;
+      font-family: var(--font);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
       transition: opacity 0.15s;
     }
-    #dlBtn:hover { opacity: 0.88; }
+
+    #dlBtn:hover {
+      opacity: 0.88;
+    }
 
     /* ── Footer ── */
     .footer {
       text-align: center;
       margin-top: 52px;
-      font-size: 0.75rem; color: var(--muted); line-height: 1.7;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.7;
     }
-    .footer strong { color: var(--text); font-weight: 600; }
+
+    .footer strong {
+      color: var(--text);
+      font-weight: 600;
+    }
 
     @media (max-width: 500px) {
-      .drops { grid-template-columns: 1fr; }
-      .dl-card { flex-direction: column; align-items: flex-start; }
-      #dlBtn { width: 100%; justify-content: center; }
+      .drops {
+        grid-template-columns: 1fr;
+      }
+
+      .dl-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      #dlBtn {
+        width: 100%;
+        justify-content: center;
+      }
     }
   </style>
 </head>
+
 <body>
-<div class="theme-toggle" role="group" aria-label="Theme">
-  <button class="theme-btn" id="btn-light" onclick="setTheme('light')">☀ Light</button>
-  <button class="theme-btn active" id="btn-auto"  onclick="setTheme('auto')">Auto</button>
-  <button class="theme-btn" id="btn-dark"  onclick="setTheme('dark')">🌙 Dark</button>
-</div>
-<div class="page">
-
-  <header class="header">
-    <div class="logo">
-      <div class="logo-icon">📚</div>
-      <span class="logo-text">JWL Merge</span>
-    </div>
-    <h1>Combine your JW Library backups</h1>
-    <p class="subtitle">Keep your highlights, notes, and bookmarks in sync across all your devices.</p>
-    <p class="subtitle">Keep your highlights, notes, and bookmarks in sync across all your devices — in just a few clicks.</p>
-    <p style="font-size:0.75rem;color:var(--muted);margin-top:8px;">
-    Uses <a href="https://sql.js.org" target="_blank" style="color:var(--teal-dk);">sql.js</a> for in-browser SQLite
-    and <a href="https://github.com/101arrowz/fflate" target="_blank" style="color:var(--teal-dk);">fflate</a> for ZIP handling.
-</p>
-  </header>
-
-  <div class="privacy">
-    <span class="privacy-icon">🔒</span>
-    <span><strong>Your files stay on your device.</strong> Nothing is uploaded to a remote server. All processing is done right in your browser.</span>
+  <div class="theme-toggle" role="group" aria-label="Theme">
+    <button class="theme-btn" id="btn-light" onclick="setTheme('light')">☀ Light</button>
+    <button class="theme-btn active" id="btn-auto" onclick="setTheme('auto')">Auto</button>
+    <button class="theme-btn" id="btn-dark" onclick="setTheme('dark')">🌙 Dark</button>
   </div>
+  <div class="page">
 
-  <div class="step">
-    <div class="step-label"><span class="step-num active">1</span> Choose your two backup files</div>
-    <div class="drops">
-      <div class="dz" id="dz1">
-        <input type="file" id="f1" accept=".jwlibrary">
-        <span class="dz-emoji">📱</span>
-        <span class="dz-role primary">Primary</span>
-        <span class="dz-name">Your main device</span>
-        <span class="dz-hint" id="h1">Tap or drop a .jwlibrary file here</span>
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon">📚</div>
+        <span class="logo-text">JWL Merge</span>
       </div>
-      <div class="dz" id="dz2">
-        <input type="file" id="f2" accept=".jwlibrary">
-        <span class="dz-emoji">💻</span>
-        <span class="dz-role secondary">Secondary</span>
-        <span class="dz-name">Your other device</span>
-        <span class="dz-hint" id="h2">Tap or drop a .jwlibrary file here</span>
+      <h1>Combine your JW Library backups</h1>
+      <p class="subtitle">Keep your highlights, notes, and bookmarks in sync across all your devices.</p>
+      <p class="subtitle">Keep your highlights, notes, and bookmarks in sync across all your devices — in just a few
+        clicks.</p>
+      <p style="font-size:0.75rem;color:var(--muted);margin-top:8px;">
+        Uses <a href="https://sql.js.org" target="_blank" style="color:var(--teal-dk);">sql.js</a> for in-browser SQLite
+        and <a href="https://github.com/101arrowz/fflate" target="_blank" style="color:var(--teal-dk);">fflate</a> for
+        ZIP handling.
+      </p>
+    </header>
+
+    <div class="privacy">
+      <span class="privacy-icon">🔒</span>
+      <span><strong>Your files stay on your device.</strong> Nothing is uploaded to a remote server. All processing is
+        done right in your browser.</span>
+    </div>
+
+    <div class="step">
+      <div class="step-label"><span class="step-num active">1</span> Choose your two backup files</div>
+      <div class="drops">
+        <div class="dz" id="dz1">
+          <input type="file" id="f1" accept=".jwlibrary">
+          <span class="dz-emoji">📱</span>
+          <span class="dz-role primary">Primary</span>
+          <span class="dz-name">Your main device</span>
+          <span class="dz-hint" id="h1">Tap or drop a .jwlibrary file here</span>
+        </div>
+        <div class="dz" id="dz2">
+          <input type="file" id="f2" accept=".jwlibrary">
+          <span class="dz-emoji">💻</span>
+          <span class="dz-role secondary">Secondary</span>
+          <span class="dz-name">Your other device</span>
+          <span class="dz-hint" id="h2">Tap or drop a .jwlibrary file here</span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="tip">
-    <strong>Which file should be Primary?</strong> Use the backup from your most-used device, or the one with your most recent notes. When the same item exists on both devices, the Primary version is kept.
-  </div>
-
-  <div class="step">
-    <div class="step-label"><span class="step-num" id="step2num">2</span> Merge the two files together</div>
-    <button id="mergeBtn" disabled>Merge my backups →</button>
-    <div class="log-wrap" id="logWrap" style="display:none">
-      <div id="log"><span class="c-dim">Starting…</span></div>
+    <div class="tip">
+      <strong>Which file should be Primary?</strong> Use the backup from your most-used device, or the one with your
+      most recent notes. When the same item exists on both devices, the Primary version is kept.
     </div>
-  </div>
 
-  <div id="dlSection">
-    <div class="step-label"><span class="step-num active">3</span> Download &amp; restore</div>
-    <div class="dl-card">
-      <div>
-        <div class="dl-title">✓ Your merged backup is ready!</div>
-        <div class="dl-meta" id="dlMeta"></div>
+    <div class="step">
+      <div class="step-label"><span class="step-num" id="step2num">2</span> Merge the two files together</div>
+      <button id="mergeBtn" disabled>Merge my backups →</button>
+      <div class="log-wrap" id="logWrap" style="display:none">
+        <div id="log"><span class="c-dim">Starting…</span></div>
       </div>
-      <a id="dlBtn" href="#" download="merged.jwlibrary">⬇ Download</a>
     </div>
-    <div class="tip" style="margin-top:14px; margin-bottom:0;">
-      <strong>How to restore:</strong> Open JW Library → Menu → Backup &amp; Restore → Restore — then choose the file you just downloaded.
+
+    <div id="dlSection">
+      <div class="step-label"><span class="step-num active">3</span> Download &amp; restore</div>
+      <div class="dl-card">
+        <div>
+          <div class="dl-title">✓ Your merged backup is ready!</div>
+          <div class="dl-meta" id="dlMeta"></div>
+        </div>
+        <a id="dlBtn" href="#" download="merged.jwlibrary">⬇ Download</a>
+      </div>
+      <div class="tip" style="margin-top:14px; margin-bottom:0;">
+        <strong>How to restore:</strong> Open JW Library → Menu → Backup &amp; Restore → Restore — then choose the file
+        you just downloaded.
+      </div>
     </div>
+
+    <footer class="footer">
+      This is an independent, community-made tool.<br>
+      <strong>Not affiliated with, endorsed by, or connected to JW.ORG or the Watch Tower Bible and Tract Society in any
+        way.</strong><br>
+      "JW Library" is a trademark of the Watch Tower Bible and Tract Society of Pennsylvania.<br>
+      Always keep your original backups. Use at your own risk.
+      <br>Built with <a href="https://sql.js.org" target="_blank"
+        style="color:var(--muted);text-decoration:underline;">sql.js</a>
+      and <a href="https://github.com/101arrowz/fflate" target="_blank"
+        style="color:var(--muted);text-decoration:underline;">fflate</a>
+      — both run entirely in your browser, nothing is sent to a server.
+    </footer>
+
   </div>
-
-  <footer class="footer">
-    This is an independent, community-made tool.<br>
-    <strong>Not affiliated with, endorsed by, or connected to JW.ORG or the Watch Tower Bible and Tract Society in any way.</strong><br>
-    "JW Library" is a trademark of the Watch Tower Bible and Tract Society of Pennsylvania.<br>
-    Always keep your original backups. Use at your own risk.
-    <br>Built with <a href="https://sql.js.org" target="_blank" style="color:var(--muted);text-decoration:underline;">sql.js</a>
-    and <a href="https://github.com/101arrowz/fflate" target="_blank" style="color:var(--muted);text-decoration:underline;">fflate</a>
-    — both run entirely in your browser, nothing is sent to a server.
-  </footer>
-
-</div>
-<script>
-// ── Theme ──────────────────────────────────────────────────────────────
-function setTheme(t) {
-  if (t === 'auto') document.documentElement.removeAttribute('data-theme');
-  else document.documentElement.setAttribute('data-theme', t);
-  localStorage.setItem('jwl-theme', t);
-  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(`btn-${t}`).classList.add('active');
-}
-(function () {
-  const saved = localStorage.getItem('jwl-theme') || 'auto';
-  setTheme(saved);
-})();
-
-// ── globals ────────────────────────────────────────────────────────────
-let SQL = null;
-const files = {1: null, 2: null};
-
-// ── sql.js init ────────────────────────────────────────────────────────
-initSqlJs({ locateFile: f => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/${f}` })
-  .then(s => { SQL = s; checkReady(); })
-  .catch(e => showLog(`<span class="c-err">Could not load database engine: ${e.message}</span>`));
-
-// ── file handling ──────────────────────────────────────────────────────
-function readBytes(file) {
-  return new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = e => res(new Uint8Array(e.target.result));
-    r.onerror = rej;
-    r.readAsArrayBuffer(file);
-  });
-}
-
-async function handleFile(num, file) {
-  const dz = document.getElementById(`dz${num}`);
-  const hint = document.getElementById(`h${num}`);
-  try {
-    files[num] = { name: file.name, data: await readBytes(file) };
-    dz.classList.add('loaded');
-    hint.innerHTML = `<span class="dz-file">✓ ${file.name}</span>`;
-    checkReady();
-  } catch (e) {
-    showLog(`<span class="c-err">Couldn't read that file: ${e.message}</span>`);
-  }
-}
-
-[1, 2].forEach(n => {
-  const dz = document.getElementById(`dz${n}`);
-  const inp = document.getElementById(`f${n}`);
-  inp.addEventListener('change', () => inp.files[0] && handleFile(n, inp.files[0]));
-  dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over'); });
-  dz.addEventListener('dragleave', () => dz.classList.remove('over'));
-  dz.addEventListener('drop', e => {
-    e.preventDefault(); dz.classList.remove('over');
-    const f = e.dataTransfer.files[0]; if (f) handleFile(n, f);
-  });
-});
-
-function checkReady() {
-  const ready = !!(files[1] && files[2] && SQL);
-  document.getElementById('mergeBtn').disabled = !ready;
-  if (ready) document.getElementById('step2num').classList.add('active');
-}
-
-// ── log helpers ────────────────────────────────────────────────────────
-let logStarted = false;
-
-function showLog(html) {
-  const wrap = document.getElementById('logWrap');
-  const box  = document.getElementById('log');
-  wrap.style.display = 'block';
-  if (!logStarted) { box.innerHTML = ''; logStarted = true; }
-  const d = document.createElement('div');
-  d.innerHTML = html;
-  box.appendChild(d);
-  box.scrollTop = box.scrollHeight;
-}
-
-function logRow(name, val) {
-  showLog(`<div class="ll"><span class="ll-name">${name}</span><span class="ll-val">${val.toLocaleString()}</span></div>`);
-}
-function logDiv() { showLog('<div class="log-div"></div>'); }
-
-// ── merge button ───────────────────────────────────────────────────────
-document.getElementById('mergeBtn').addEventListener('click', async () => {
-  const btn = document.getElementById('mergeBtn');
-  btn.disabled = true;
-  logStarted = false;
-  document.getElementById('dlSection').classList.remove('show');
-
-  try {
-    showLog('<span class="c-acc">Reading your backup files…</span>');
-    const zip1 = fflate.unzipSync(files[1].data);
-    const zip2 = fflate.unzipSync(files[2].data);
-
-    const merger = new JWLMerger(SQL, zip1, zip2);
-    merger.onLog = showLog;
-
-    showLog('<span class="c-acc">Merging everything together…</span>');
-    logDiv();
-    merger.run();
-    logDiv();
-
-    showLog('<span class="c-acc">Building your new backup file…</span>');
-    const outZip = await merger.package('merged.jwlibrary');
-    const blob = new Blob([outZip], { type: 'application/octet-stream' });
-    const url = URL.createObjectURL(blob);
-
-    document.getElementById('dlBtn').href = url;
-    document.getElementById('dlMeta').textContent =
-      `${(blob.size / 1024).toFixed(0)} KB · merged ${new Date().toLocaleString()}`;
-    document.getElementById('dlSection').classList.add('show');
-    document.getElementById('dlSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-    showLog('<span class="c-ok">✓ All done! Your merged backup is ready to download.</span>');
-  } catch (e) {
-    showLog(`<span class="c-err">Something went wrong: ${e.message}</span>`);
-    console.error(e);
-  } finally {
-    btn.disabled = false;
-    checkReady();
-  }
-});
-
-// ══════════════════════════════════════════════════════════════════════
-// JWLMerger — ports jwl_merge.py merge logic to the browser
-// NOTE: This is an independent tool, not affiliated with JW.ORG or the
-//       Watch Tower Bible and Tract Society of Pennsylvania.
-// ══════════════════════════════════════════════════════════════════════
-class JWLMerger {
-  constructor(SQL, zip1, zip2) {
-    this.m1 = JSON.parse(new TextDecoder().decode(zip1['manifest.json']));
-    this.m2 = JSON.parse(new TextDecoder().decode(zip2['manifest.json']));
-    this.db1 = new SQL.Database(zip1[this.m1.userDataBackup.databaseName]);
-    this.db2 = new SQL.Database(zip2[this.m2.userDataBackup.databaseName]);
-    this.out = new SQL.Database();
-    this.zip1 = zip1; this.zip2 = zip2;
-    this.outFiles = {};
-    this.loc = new Map(); this.um   = new Map(); this.note  = new Map();
-    this.tag = new Map(); this.media= new Map(); this.pl    = new Map();
-    this.plmk= new Map(); this.umWin= new Map();
-    this.onLog = null;
-  }
-
-  k(s, id) { return `${s}:${id}`; }
-  emit(html) { if (this.onLog) this.onLog(html); }
-  ins(sql, v) { this.out.run(sql, v); }
-
-  rloc (s,v){ return v!=null ? this.loc.get(this.k(s,v))  ??null:null; }
-  rum  (s,v){ return v!=null ? this.um.get(this.k(s,v))   ??null:null; }
-  rnote(s,v){ return v!=null ? this.note.get(this.k(s,v)) ??null:null; }
-  rtag (s,v){ return v!=null ? this.tag.get(this.k(s,v))  ??null:null; }
-  rmdia(s,v){ return v!=null ? this.media.get(this.k(s,v))??null:null; }
-  rpl  (s,v){ return v!=null ? this.pl.get(this.k(s,v))   ??null:null; }
-  rplmk(s,v){ return v!=null ? this.plmk.get(this.k(s,v)) ??null:null; }
-
-  rows(db, table) {
-    try {
-      const r = db.exec(`SELECT * FROM [${table}]`);
-      if (!r.length) return [];
-      const {columns, values} = r[0];
-      return values.map(row => Object.fromEntries(columns.map((c,i) => [c, row[i]])));
-    } catch { return []; }
-  }
-
-  copySchema() {
-    const r = this.db1.exec("SELECT sql FROM sqlite_master WHERE type IN ('table','index') AND sql IS NOT NULL ORDER BY rootpage");
-    if (!r.length) return;
-    for (const [sql] of r[0].values) try { this.out.run(sql); } catch {}
-  }
-
-  run() {
-    const v1 = this.m1.userDataBackup.schemaVersion;
-    const v2 = this.m2.userDataBackup.schemaVersion;
-    if (v1 && v2 && v1 !== v2) throw new Error(`These two backups are from different app versions (${v1} vs ${v2}). Please update JW Library on both devices and make new backups before merging.`);
-    this.copySchema();
-
-    const steps = [
-      ['Locations',                       () => this.mergeLocations()],
-      ['Media files',                     () => this.mergeMedia()],
-      ['Tags',                            () => this.mergeTags()],
-      ['Highlights',                      () => this.mergeUserMarks()],
-      ['Highlight ranges',                () => this.mergeBlockRanges()],
-      ['Notes',                           () => this.mergeNotes()],
-      ['Bookmarks',                       () => this.mergeBookmarks()],
-      ['Study answers',                   () => this.mergeInputFields()],
-      ['Playlist accuracy',               () => this.mergePlaylistAccuracy()],
-      ['Playlist items',                  () => this.mergePlaylistItems()],
-      ['Tags on items',                   () => this.mergeTagMap()],
-      ['Playlist media links',            () => this.mergePlMediaMap()],
-      ['Playlist location links',         () => this.mergePlLocationMap()],
-      ['Playlist markers',                () => this.mergePlMarkers()],
-      ['Playlist verse markers',          () => this.mergePlMarkerVerseMap()],
-      ['Playlist paragraph markers',      () => this.mergePlMarkerParaMap()],
-      ['Last modified',                   () => this.mergeLastModified()],
-      ['App migrations',                  () => this.mergeMigrations()],
-    ];
-
-    for (const [name, fn] of steps) logRow(name, fn());
-    this.copyExtraFiles();
-  }
-
-  mergeLocations() {
-    const keyId = new Map(); let nxt = 1;
-    for (const [s,db] of [['1',this.db1],['2',this.db2]])
-      for (const r of this.rows(db,'Location')) {
-        const k = JSON.stringify([r.KeySymbol,r.MepsLanguage,r.BookNumber,r.ChapterNumber,r.DocumentId,r.Track,r.IssueTagNumber,r.Type]);
-        if (!keyId.has(k)) {
-          keyId.set(k, nxt);
-          this.ins('INSERT INTO Location(LocationId,BookNumber,ChapterNumber,DocumentId,Track,IssueTagNumber,KeySymbol,MepsLanguage,Type,Title) VALUES(?,?,?,?,?,?,?,?,?,?)',
-            [nxt,r.BookNumber,r.ChapterNumber,r.DocumentId,r.Track,r.IssueTagNumber,r.KeySymbol,r.MepsLanguage,r.Type,r.Title]);
-          nxt++;
-        }
-        this.loc.set(this.k(s,r.LocationId), keyId.get(k));
-      }
-    return keyId.size;
-  }
-
-  mergeMedia() {
-    const hashId = new Map(); let nxt = 1;
-    for (const [s,db,zip] of [['1',this.db1,this.zip1],['2',this.db2,this.zip2]])
-      for (const r of this.rows(db,'IndependentMedia')) {
-        if (!hashId.has(r.Hash)) {
-          hashId.set(r.Hash, nxt);
-          if (zip[r.FilePath] && !this.outFiles[r.FilePath]) this.outFiles[r.FilePath] = zip[r.FilePath];
-          this.ins('INSERT INTO IndependentMedia(IndependentMediaId,OriginalFilename,FilePath,MimeType,Hash) VALUES(?,?,?,?,?)',
-            [nxt,r.OriginalFilename,r.FilePath,r.MimeType,r.Hash]);
-          nxt++;
-        }
-        this.media.set(this.k(s,r.IndependentMediaId), hashId.get(r.Hash));
-      }
-    return hashId.size;
-  }
-
-  mergeTags() {
-    const keyId = new Map(); let nxt = 1;
-    for (const [s,db] of [['1',this.db1],['2',this.db2]])
-      for (const r of this.rows(db,'Tag')) {
-        const k = JSON.stringify([r.Type,r.Name]);
-        if (!keyId.has(k)) {
-          keyId.set(k, nxt);
-          this.ins('INSERT INTO Tag(TagId,Type,Name) VALUES(?,?,?)', [nxt,r.Type,r.Name]);
-          nxt++;
-        }
-        this.tag.set(this.k(s,r.TagId), keyId.get(k));
-      }
-    return keyId.size;
-  }
-
-  mergeUserMarks() {
-    const best = new Map();
-    for (const [s,db] of [['1',this.db1],['2',this.db2]])
-      for (const r of this.rows(db,'UserMark'))
-        if (!best.has(r.UserMarkGuid) || r.Version > best.get(r.UserMarkGuid).r.Version)
-          best.set(r.UserMarkGuid, {s, r});
-    const gId = new Map(); let nxt = 1;
-    for (const [g] of best) gId.set(g, nxt++);
-    for (const [s,db] of [['1',this.db1],['2',this.db2]])
-      for (const r of this.rows(db,'UserMark')) {
-        this.um.set(this.k(s,r.UserMarkId), gId.get(r.UserMarkGuid));
-        this.umWin.set(this.k(s,r.UserMarkId), best.get(r.UserMarkGuid).s);
-      }
-    for (const [g,{s:ws,r}] of best)
-      this.ins('INSERT INTO UserMark(UserMarkId,ColorIndex,LocationId,StyleIndex,UserMarkGuid,Version) VALUES(?,?,?,?,?,?)',
-        [gId.get(g),r.ColorIndex,this.rloc(ws,r.LocationId),r.StyleIndex,r.UserMarkGuid,r.Version]);
-    return best.size;
-  }
-
-  mergeBlockRanges() {
-    let nxt = 1;
-    for (const [s,db] of [['1',this.db1],['2',this.db2]])
-      for (const r of this.rows(db,'BlockRange')) {
-        if (this.umWin.get(this.k(s,r.UserMarkId)) !== s) continue;
-        const um = this.rum(s,r.UserMarkId); if (um == null) continue;
-        this.ins('INSERT INTO BlockRange(BlockRangeId,BlockType,Identifier,StartToken,EndToken,UserMarkId) VALUES(?,?,?,?,?,?)',
-          [nxt++,r.BlockType,r.Identifier,r.StartToken,r.EndToken,um]);
-      }
-    return nxt-1;
-  }
-
-  mergeNotes() {
-    const best = new Map();
-    for (const [s,db] of [['1',this.db1],['2',this.db2]])
-      for (const r of this.rows(db,'Note'))
-        if (!best.has(r.Guid) || r.LastModified > best.get(r.Guid).r.LastModified)
-          best.set(r.Guid, {s, r});
-    const gId = new Map(); let nxt = 1;
-    for (const [g] of best) gId.set(g, nxt++);
-    for (const [s,db] of [['1',this.db1],['2',this.db2]])
-      for (const r of this.rows(db,'Note'))
-        this.note.set(this.k(s,r.NoteId), gId.get(r.Guid));
-    for (const [g,{s:ws,r}] of best)
-      this.ins('INSERT INTO Note(NoteId,Guid,UserMarkId,LocationId,Title,Content,LastModified,Created,BlockType,BlockIdentifier) VALUES(?,?,?,?,?,?,?,?,?,?)',
-        [gId.get(g),g,this.rum(ws,r.UserMarkId),this.rloc(ws,r.LocationId),r.Title,r.Content,r.LastModified,r.Created,r.BlockType,r.BlockIdentifier]);
-    return best.size;
-  }
-
-  mergeBookmarks() {
-    const seen = new Set(); let nxt = 1;
-    for (const [s,db] of [['1',this.db1],['2',this.db2]])
-      for (const r of this.rows(db,'Bookmark')) {
-        const l=this.rloc(s,r.LocationId), pl=this.rloc(s,r.PublicationLocationId);
-        if (l==null||pl==null) continue;
-        const key=`${pl}:${r.Slot}`; if (seen.has(key)) continue; seen.add(key);
-        this.ins('INSERT INTO Bookmark(BookmarkId,LocationId,PublicationLocationId,Slot,Title,Snippet,BlockType,BlockIdentifier) VALUES(?,?,?,?,?,?,?,?)',
-          [nxt++,l,pl,r.Slot,r.Title,r.Snippet,r.BlockType,r.BlockIdentifier]);
-      }
-    return nxt-1;
-  }
-
-  mergeInputFields() {
-    const seen = new Set(); let count = 0;
-    for (const [s,db] of [['1',this.db1],['2',this.db2]])
-      for (const r of this.rows(db,'InputField')) {
-        const l=this.rloc(s,r.LocationId); if (l==null) continue;
-        const key=`${l}:${r.TextTag}`; if (seen.has(key)) continue; seen.add(key);
-        this.ins('INSERT INTO InputField(LocationId,TextTag,Value) VALUES(?,?,?)',[l,r.TextTag,r.Value]);
-        count++;
-      }
-    return count;
-  }
-
-  mergePlaylistAccuracy() {
-    const seen = new Set();
-    for (const r of this.rows(this.db1,'PlaylistItemAccuracy')) {
-      this.ins('INSERT INTO PlaylistItemAccuracy(PlaylistItemAccuracyId,Description) VALUES(?,?)',[r.PlaylistItemAccuracyId,r.Description]);
-      seen.add(r.PlaylistItemAccuracyId);
+  <script>
+    // ── Theme ──────────────────────────────────────────────────────────────
+    function setTheme(t) {
+      if (t === 'auto') document.documentElement.removeAttribute('data-theme');
+      else document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('jwl-theme', t);
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(`btn-${t}`).classList.add('active');
     }
-    for (const r of this.rows(this.db2,'PlaylistItemAccuracy'))
-      if (!seen.has(r.PlaylistItemAccuracyId)) {
-        this.ins('INSERT INTO PlaylistItemAccuracy(PlaylistItemAccuracyId,Description) VALUES(?,?)',[r.PlaylistItemAccuracyId,r.Description]);
-        seen.add(r.PlaylistItemAccuracyId);
-      }
-    return seen.size;
-  }
+    (function () {
+      const saved = localStorage.getItem('jwl-theme') || 'auto';
+      setTheme(saved);
+    })();
 
-  mergePlaylistItems() {
-    const fpId = new Map(); let nxt = 1;
-    for (const [s,db,zip] of [['1',this.db1,this.zip1],['2',this.db2,this.zip2]])
-      for (const r of this.rows(db,'PlaylistItem')) {
-        const fp=JSON.stringify([r.Label,r.StartTrimOffsetTicks,r.EndTrimOffsetTicks,r.Accuracy,r.EndAction,r.ThumbnailFilePath]);
-        if (!fpId.has(fp)) {
-          fpId.set(fp, nxt);
-          if (r.ThumbnailFilePath && zip[r.ThumbnailFilePath] && !this.outFiles[r.ThumbnailFilePath])
-            this.outFiles[r.ThumbnailFilePath] = zip[r.ThumbnailFilePath];
-          this.ins('INSERT INTO PlaylistItem(PlaylistItemId,Label,StartTrimOffsetTicks,EndTrimOffsetTicks,Accuracy,EndAction,ThumbnailFilePath) VALUES(?,?,?,?,?,?,?)',
-            [nxt,r.Label,r.StartTrimOffsetTicks,r.EndTrimOffsetTicks,r.Accuracy,r.EndAction,r.ThumbnailFilePath]);
-          nxt++;
-        }
-        this.pl.set(this.k(s,r.PlaylistItemId), fpId.get(fp));
-      }
-    return fpId.size;
-  }
+    // ── globals ────────────────────────────────────────────────────────────
+    let SQL = null;
+    const files = { 1: null, 2: null };
 
-  mergeTagMap() {
-    const seen = new Set();
-    const rows = [];
-    for (const [s,db] of [['1',this.db1],['2',this.db2]])
-      for (const r of this.rows(db,'TagMap')) {
-        const tag=this.rtag(s,r.TagId); if (tag==null) continue;
-        const note=this.rnote(s,r.NoteId), loc=this.rloc(s,r.LocationId), pl=this.rpl(s,r.PlaylistItemId);
-        const key=JSON.stringify([pl,loc,note,tag]); if (seen.has(key)) continue; seen.add(key);
-        rows.push({pl,loc,note,tag});
-      }
-    const posCounter = new Map();
-    let nxt = 1;
-    for (const {pl,loc,note,tag} of rows) {
-      const pos = posCounter.get(tag) ?? 0;
-      posCounter.set(tag, pos + 1);
-      this.ins('INSERT INTO TagMap(TagMapId,PlaylistItemId,LocationId,NoteId,TagId,Position) VALUES(?,?,?,?,?,?)',
-        [nxt++,pl,loc,note,tag,pos]);
+    // ── sql.js init ────────────────────────────────────────────────────────
+    initSqlJs({ locateFile: f => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/${f}` })
+      .then(s => { SQL = s; checkReady(); })
+      .catch(e => showLog(`<span class="c-err">Could not load database engine: ${e.message}</span>`));
+
+    // ── file handling ──────────────────────────────────────────────────────
+    function readBytes(file) {
+      return new Promise((res, rej) => {
+        const r = new FileReader();
+        r.onload = e => res(new Uint8Array(e.target.result));
+        r.onerror = rej;
+        r.readAsArrayBuffer(file);
+      });
     }
-    return nxt-1;
-  }
 
-  mergePlMediaMap() {
-    const seen = new Set(); let count = 0;
-    for (const [s,db] of [['1',this.db1],['2',this.db2]])
-      for (const r of this.rows(db,'PlaylistItemIndependentMediaMap')) {
-        const pl=this.rpl(s,r.PlaylistItemId), m=this.rmdia(s,r.IndependentMediaId);
-        if (pl==null||m==null) continue;
-        const key=`${pl}:${m}`; if (seen.has(key)) continue; seen.add(key);
-        this.ins('INSERT INTO PlaylistItemIndependentMediaMap(PlaylistItemId,IndependentMediaId,DurationTicks) VALUES(?,?,?)',[pl,m,r.DurationTicks]);
-        count++;
+    async function handleFile(num, file) {
+      const dz = document.getElementById(`dz${num}`);
+      const hint = document.getElementById(`h${num}`);
+      try {
+        files[num] = { name: file.name, data: await readBytes(file) };
+        const manifest = JSON.parse(new TextDecoder().decode(fflate.unzipSync(files[num].data)['manifest.json']));
+        const ub = manifest.userDataBackup;
+        const date = new Date(ub.lastModifiedDate).toLocaleDateString(undefined, {dateStyle: 'medium'});
+        dz.classList.add('loaded');
+        hint.innerHTML = `
+  <span class="dz-file">✓ ${file.name}</span>
+  <span style="font-size:0.75rem;color:var(--teal-dk);margin-top:4px;">
+    ${ub.deviceName} &nbsp;·&nbsp; Schema v${ub.schemaVersion}<br>${date}
+  </span>`;
+        checkReady();
+      } catch (e) {
+        showLog(`<span class="c-err">Couldn't read that file: ${e.message}</span>`);
       }
-    return count;
-  }
+    }
 
-  mergePlLocationMap() {
-    const seen = new Set(); let count = 0;
-    for (const [s,db] of [['1',this.db1],['2',this.db2]])
-      for (const r of this.rows(db,'PlaylistItemLocationMap')) {
-        const pl=this.rpl(s,r.PlaylistItemId), loc=this.rloc(s,r.LocationId);
-        if (pl==null||loc==null) continue;
-        const key=`${pl}:${loc}`; if (seen.has(key)) continue; seen.add(key);
-        this.ins('INSERT INTO PlaylistItemLocationMap(PlaylistItemId,LocationId,MajorMultimediaType,BaseDurationTicks) VALUES(?,?,?,?)',[pl,loc,r.MajorMultimediaType,r.BaseDurationTicks]);
-        count++;
+    [1, 2].forEach(n => {
+      const dz = document.getElementById(`dz${n}`);
+      const inp = document.getElementById(`f${n}`);
+      inp.addEventListener('change', () => inp.files[0] && handleFile(n, inp.files[0]));
+      dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over'); });
+      dz.addEventListener('dragleave', () => dz.classList.remove('over'));
+      dz.addEventListener('drop', e => {
+        e.preventDefault(); dz.classList.remove('over');
+        const f = e.dataTransfer.files[0]; if (f) handleFile(n, f);
+      });
+    });
+
+    function checkReady() {
+      const ready = !!(files[1] && files[2] && SQL);
+      document.getElementById('mergeBtn').disabled = !ready;
+      if (ready) document.getElementById('step2num').classList.add('active');
+    }
+
+    // ── log helpers ────────────────────────────────────────────────────────
+    let logStarted = false;
+
+    function showLog(html) {
+      const wrap = document.getElementById('logWrap');
+      const box = document.getElementById('log');
+      wrap.style.display = 'block';
+      if (!logStarted) { box.innerHTML = ''; logStarted = true; }
+      const d = document.createElement('div');
+      d.innerHTML = html;
+      box.appendChild(d);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function logRow(name, val) {
+      showLog(`<div class="ll"><span class="ll-name">${name}</span><span class="ll-val">${val.toLocaleString()}</span></div>`);
+    }
+    function logDiv() { showLog('<div class="log-div"></div>'); }
+
+    // ── merge button ───────────────────────────────────────────────────────
+    document.getElementById('mergeBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('mergeBtn');
+      btn.disabled = true;
+      logStarted = false;
+      document.getElementById('dlSection').classList.remove('show');
+
+      try {
+        showLog('<span class="c-acc">Reading your backup files…</span>');
+        const zip1 = fflate.unzipSync(files[1].data);
+        const zip2 = fflate.unzipSync(files[2].data);
+
+        const merger = new JWLMerger(SQL, zip1, zip2);
+        merger.onLog = showLog;
+
+        showLog('<span class="c-acc">Merging everything together…</span>');
+        logDiv();
+        merger.run();
+        logDiv();
+
+        showLog('<span class="c-acc">Building your new backup file…</span>');
+        const outZip = await merger.package('merged.jwlibrary');
+        const blob = new Blob([outZip], { type: 'application/octet-stream' });
+        const url = URL.createObjectURL(blob);
+
+        document.getElementById('dlBtn').href = url;
+        document.getElementById('dlMeta').textContent =
+          `${(blob.size / 1024).toFixed(0)} KB · merged ${new Date().toLocaleString()}`;
+        document.getElementById('dlSection').classList.add('show');
+        document.getElementById('dlSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        showLog('<span class="c-ok">✓ All done! Your merged backup is ready to download.</span>');
+      } catch (e) {
+        showLog(`<span class="c-err">Something went wrong: ${e.message}</span>`);
+        console.error(e);
+      } finally {
+        btn.disabled = false;
+        checkReady();
       }
-    return count;
-  }
+    });
 
-  mergePlMarkers() {
-    const keyId = new Map(); let nxt = 1;
-    for (const [s,db] of [['1',this.db1],['2',this.db2]])
-      for (const r of this.rows(db,'PlaylistItemMarker')) {
-        const pl=this.rpl(s,r.PlaylistItemId); if (pl==null) continue;
-        const key=JSON.stringify([pl,r.Label,r.StartTimeTicks]);
-        if (!keyId.has(key)) {
-          keyId.set(key, nxt);
-          this.ins('INSERT INTO PlaylistItemMarker(PlaylistItemMarkerId,PlaylistItemId,Label,StartTimeTicks,DurationTicks,EndTransitionDurationTicks) VALUES(?,?,?,?,?,?)',
-            [nxt,pl,r.Label,r.StartTimeTicks,r.DurationTicks,r.EndTransitionDurationTicks]);
-          nxt++;
+    // ══════════════════════════════════════════════════════════════════════
+    // JWLMerger — ports jwl_merge.py merge logic to the browser
+    // NOTE: This is an independent tool, not affiliated with JW.ORG or the
+    //       Watch Tower Bible and Tract Society of Pennsylvania.
+    // ══════════════════════════════════════════════════════════════════════
+    class JWLMerger {
+      constructor(SQL, zip1, zip2) {
+        this.m1 = JSON.parse(new TextDecoder().decode(zip1['manifest.json']));
+        this.m2 = JSON.parse(new TextDecoder().decode(zip2['manifest.json']));
+        this.db1 = new SQL.Database(zip1[this.m1.userDataBackup.databaseName]);
+        this.db2 = new SQL.Database(zip2[this.m2.userDataBackup.databaseName]);
+        this.out = new SQL.Database();
+        this.zip1 = zip1; this.zip2 = zip2;
+        this.outFiles = {};
+        this.loc = new Map(); this.um = new Map(); this.note = new Map();
+        this.tag = new Map(); this.media = new Map(); this.pl = new Map();
+        this.plmk = new Map(); this.umWin = new Map();
+        this.onLog = null;
+      }
+
+      k(s, id) { return `${s}:${id}`; }
+      emit(html) { if (this.onLog) this.onLog(html); }
+      ins(sql, v) { this.out.run(sql, v); }
+
+      rloc(s, v) { return v != null ? this.loc.get(this.k(s, v)) ?? null : null; }
+      rum(s, v) { return v != null ? this.um.get(this.k(s, v)) ?? null : null; }
+      rnote(s, v) { return v != null ? this.note.get(this.k(s, v)) ?? null : null; }
+      rtag(s, v) { return v != null ? this.tag.get(this.k(s, v)) ?? null : null; }
+      rmdia(s, v) { return v != null ? this.media.get(this.k(s, v)) ?? null : null; }
+      rpl(s, v) { return v != null ? this.pl.get(this.k(s, v)) ?? null : null; }
+      rplmk(s, v) { return v != null ? this.plmk.get(this.k(s, v)) ?? null : null; }
+
+      rows(db, table) {
+        try {
+          const r = db.exec(`SELECT * FROM [${table}]`);
+          if (!r.length) return [];
+          const { columns, values } = r[0];
+          return values.map(row => Object.fromEntries(columns.map((c, i) => [c, row[i]])));
+        } catch { return []; }
+      }
+
+      copySchema() {
+        const r = this.db1.exec("SELECT sql FROM sqlite_master WHERE type IN ('table','index') AND sql IS NOT NULL ORDER BY rootpage");
+        if (!r.length) return;
+        for (const [sql] of r[0].values) try { this.out.run(sql); } catch { }
+      }
+
+      run() {
+        const v1 = this.m1.userDataBackup.schemaVersion;
+        const v2 = this.m2.userDataBackup.schemaVersion;
+        if (v1 && v2 && v1 !== v2) throw new Error(`These two backups are from different app versions (${v1} vs ${v2}). Please update JW Library on both devices and make new backups before merging.`);
+        this.copySchema();
+
+        const steps = [
+          ['Locations', () => this.mergeLocations()],
+          ['Media files', () => this.mergeMedia()],
+          ['Tags', () => this.mergeTags()],
+          ['Highlights', () => this.mergeUserMarks()],
+          ['Highlight ranges', () => this.mergeBlockRanges()],
+          ['Notes', () => this.mergeNotes()],
+          ['Bookmarks', () => this.mergeBookmarks()],
+          ['Study answers', () => this.mergeInputFields()],
+          ['Playlist accuracy', () => this.mergePlaylistAccuracy()],
+          ['Playlist items', () => this.mergePlaylistItems()],
+          ['Tags on items', () => this.mergeTagMap()],
+          ['Playlist media links', () => this.mergePlMediaMap()],
+          ['Playlist location links', () => this.mergePlLocationMap()],
+          ['Playlist markers', () => this.mergePlMarkers()],
+          ['Playlist verse markers', () => this.mergePlMarkerVerseMap()],
+          ['Playlist paragraph markers', () => this.mergePlMarkerParaMap()],
+          ['Last modified', () => this.mergeLastModified()],
+          ['App migrations', () => this.mergeMigrations()],
+        ];
+
+        for (const [name, fn] of steps) logRow(name, fn());
+        this.copyExtraFiles();
+      }
+
+      mergeLocations() {
+        const keyId = new Map(); let nxt = 1;
+        for (const [s, db] of [['1', this.db1], ['2', this.db2]])
+          for (const r of this.rows(db, 'Location')) {
+            const k = JSON.stringify([r.KeySymbol, r.MepsLanguage, r.BookNumber, r.ChapterNumber, r.DocumentId, r.Track, r.IssueTagNumber, r.Type]);
+            if (!keyId.has(k)) {
+              keyId.set(k, nxt);
+              this.ins('INSERT INTO Location(LocationId,BookNumber,ChapterNumber,DocumentId,Track,IssueTagNumber,KeySymbol,MepsLanguage,Type,Title) VALUES(?,?,?,?,?,?,?,?,?,?)',
+                [nxt, r.BookNumber, r.ChapterNumber, r.DocumentId, r.Track, r.IssueTagNumber, r.KeySymbol, r.MepsLanguage, r.Type, r.Title]);
+              nxt++;
+            }
+            this.loc.set(this.k(s, r.LocationId), keyId.get(k));
+          }
+        return keyId.size;
+      }
+
+      mergeMedia() {
+        const hashId = new Map(); let nxt = 1;
+        for (const [s, db, zip] of [['1', this.db1, this.zip1], ['2', this.db2, this.zip2]])
+          for (const r of this.rows(db, 'IndependentMedia')) {
+            if (!hashId.has(r.Hash)) {
+              hashId.set(r.Hash, nxt);
+              if (zip[r.FilePath] && !this.outFiles[r.FilePath]) this.outFiles[r.FilePath] = zip[r.FilePath];
+              this.ins('INSERT INTO IndependentMedia(IndependentMediaId,OriginalFilename,FilePath,MimeType,Hash) VALUES(?,?,?,?,?)',
+                [nxt, r.OriginalFilename, r.FilePath, r.MimeType, r.Hash]);
+              nxt++;
+            }
+            this.media.set(this.k(s, r.IndependentMediaId), hashId.get(r.Hash));
+          }
+        return hashId.size;
+      }
+
+      mergeTags() {
+        const keyId = new Map(); let nxt = 1;
+        for (const [s, db] of [['1', this.db1], ['2', this.db2]])
+          for (const r of this.rows(db, 'Tag')) {
+            const k = JSON.stringify([r.Type, r.Name]);
+            if (!keyId.has(k)) {
+              keyId.set(k, nxt);
+              this.ins('INSERT INTO Tag(TagId,Type,Name) VALUES(?,?,?)', [nxt, r.Type, r.Name]);
+              nxt++;
+            }
+            this.tag.set(this.k(s, r.TagId), keyId.get(k));
+          }
+        return keyId.size;
+      }
+
+      mergeUserMarks() {
+        const best = new Map();
+        for (const [s, db] of [['1', this.db1], ['2', this.db2]])
+          for (const r of this.rows(db, 'UserMark'))
+            if (!best.has(r.UserMarkGuid) || r.Version > best.get(r.UserMarkGuid).r.Version)
+              best.set(r.UserMarkGuid, { s, r });
+        const gId = new Map(); let nxt = 1;
+        for (const [g] of best) gId.set(g, nxt++);
+        for (const [s, db] of [['1', this.db1], ['2', this.db2]])
+          for (const r of this.rows(db, 'UserMark')) {
+            this.um.set(this.k(s, r.UserMarkId), gId.get(r.UserMarkGuid));
+            this.umWin.set(this.k(s, r.UserMarkId), best.get(r.UserMarkGuid).s);
+          }
+        for (const [g, { s: ws, r }] of best)
+          this.ins('INSERT INTO UserMark(UserMarkId,ColorIndex,LocationId,StyleIndex,UserMarkGuid,Version) VALUES(?,?,?,?,?,?)',
+            [gId.get(g), r.ColorIndex, this.rloc(ws, r.LocationId), r.StyleIndex, r.UserMarkGuid, r.Version]);
+        return best.size;
+      }
+
+      mergeBlockRanges() {
+        let nxt = 1;
+        for (const [s, db] of [['1', this.db1], ['2', this.db2]])
+          for (const r of this.rows(db, 'BlockRange')) {
+            if (this.umWin.get(this.k(s, r.UserMarkId)) !== s) continue;
+            const um = this.rum(s, r.UserMarkId); if (um == null) continue;
+            this.ins('INSERT INTO BlockRange(BlockRangeId,BlockType,Identifier,StartToken,EndToken,UserMarkId) VALUES(?,?,?,?,?,?)',
+              [nxt++, r.BlockType, r.Identifier, r.StartToken, r.EndToken, um]);
+          }
+        return nxt - 1;
+      }
+
+      mergeNotes() {
+        const best = new Map();
+        for (const [s, db] of [['1', this.db1], ['2', this.db2]])
+          for (const r of this.rows(db, 'Note'))
+            if (!best.has(r.Guid) || r.LastModified > best.get(r.Guid).r.LastModified)
+              best.set(r.Guid, { s, r });
+        const gId = new Map(); let nxt = 1;
+        for (const [g] of best) gId.set(g, nxt++);
+        for (const [s, db] of [['1', this.db1], ['2', this.db2]])
+          for (const r of this.rows(db, 'Note'))
+            this.note.set(this.k(s, r.NoteId), gId.get(r.Guid));
+        for (const [g, { s: ws, r }] of best)
+          this.ins('INSERT INTO Note(NoteId,Guid,UserMarkId,LocationId,Title,Content,LastModified,Created,BlockType,BlockIdentifier) VALUES(?,?,?,?,?,?,?,?,?,?)',
+            [gId.get(g), g, this.rum(ws, r.UserMarkId), this.rloc(ws, r.LocationId), r.Title, r.Content, r.LastModified, r.Created, r.BlockType, r.BlockIdentifier]);
+        return best.size;
+      }
+
+      mergeBookmarks() {
+        const seen = new Set(); let nxt = 1;
+        for (const [s, db] of [['1', this.db1], ['2', this.db2]])
+          for (const r of this.rows(db, 'Bookmark')) {
+            const l = this.rloc(s, r.LocationId), pl = this.rloc(s, r.PublicationLocationId);
+            if (l == null || pl == null) continue;
+            const key = `${pl}:${r.Slot}`; if (seen.has(key)) continue; seen.add(key);
+            this.ins('INSERT INTO Bookmark(BookmarkId,LocationId,PublicationLocationId,Slot,Title,Snippet,BlockType,BlockIdentifier) VALUES(?,?,?,?,?,?,?,?)',
+              [nxt++, l, pl, r.Slot, r.Title, r.Snippet, r.BlockType, r.BlockIdentifier]);
+          }
+        return nxt - 1;
+      }
+
+      mergeInputFields() {
+        const seen = new Set(); let count = 0;
+        for (const [s, db] of [['1', this.db1], ['2', this.db2]])
+          for (const r of this.rows(db, 'InputField')) {
+            const l = this.rloc(s, r.LocationId); if (l == null) continue;
+            const key = `${l}:${r.TextTag}`; if (seen.has(key)) continue; seen.add(key);
+            this.ins('INSERT INTO InputField(LocationId,TextTag,Value) VALUES(?,?,?)', [l, r.TextTag, r.Value]);
+            count++;
+          }
+        return count;
+      }
+
+      mergePlaylistAccuracy() {
+        const seen = new Set();
+        for (const r of this.rows(this.db1, 'PlaylistItemAccuracy')) {
+          this.ins('INSERT INTO PlaylistItemAccuracy(PlaylistItemAccuracyId,Description) VALUES(?,?)', [r.PlaylistItemAccuracyId, r.Description]);
+          seen.add(r.PlaylistItemAccuracyId);
         }
-        this.plmk.set(this.k(s,r.PlaylistItemMarkerId), keyId.get(key));
+        for (const r of this.rows(this.db2, 'PlaylistItemAccuracy'))
+          if (!seen.has(r.PlaylistItemAccuracyId)) {
+            this.ins('INSERT INTO PlaylistItemAccuracy(PlaylistItemAccuracyId,Description) VALUES(?,?)', [r.PlaylistItemAccuracyId, r.Description]);
+            seen.add(r.PlaylistItemAccuracyId);
+          }
+        return seen.size;
       }
-    return nxt-1;
-  }
 
-  mergePlMarkerVerseMap() {
-    const seen = new Set(); let count = 0;
-    for (const [s,db] of [['1',this.db1],['2',this.db2]])
-      for (const r of this.rows(db,'PlaylistItemMarkerBibleVerseMap')) {
-        const mk=this.rplmk(s,r.PlaylistItemMarkerId); if (mk==null) continue;
-        const key=`${mk}:${r.VerseId}`; if (seen.has(key)) continue; seen.add(key);
-        this.ins('INSERT INTO PlaylistItemMarkerBibleVerseMap(PlaylistItemMarkerId,VerseId) VALUES(?,?)',[mk,r.VerseId]);
-        count++;
+      mergePlaylistItems() {
+        const fpId = new Map(); let nxt = 1;
+        for (const [s, db, zip] of [['1', this.db1, this.zip1], ['2', this.db2, this.zip2]])
+          for (const r of this.rows(db, 'PlaylistItem')) {
+            const fp = JSON.stringify([r.Label, r.StartTrimOffsetTicks, r.EndTrimOffsetTicks, r.Accuracy, r.EndAction, r.ThumbnailFilePath]);
+            if (!fpId.has(fp)) {
+              fpId.set(fp, nxt);
+              if (r.ThumbnailFilePath && zip[r.ThumbnailFilePath] && !this.outFiles[r.ThumbnailFilePath])
+                this.outFiles[r.ThumbnailFilePath] = zip[r.ThumbnailFilePath];
+              this.ins('INSERT INTO PlaylistItem(PlaylistItemId,Label,StartTrimOffsetTicks,EndTrimOffsetTicks,Accuracy,EndAction,ThumbnailFilePath) VALUES(?,?,?,?,?,?,?)',
+                [nxt, r.Label, r.StartTrimOffsetTicks, r.EndTrimOffsetTicks, r.Accuracy, r.EndAction, r.ThumbnailFilePath]);
+              nxt++;
+            }
+            this.pl.set(this.k(s, r.PlaylistItemId), fpId.get(fp));
+          }
+        return fpId.size;
       }
-    return count;
-  }
 
-  mergePlMarkerParaMap() {
-    const seen = new Set(); let count = 0;
-    for (const [s,db] of [['1',this.db1],['2',this.db2]])
-      for (const r of this.rows(db,'PlaylistItemMarkerParagraphMap')) {
-        const mk=this.rplmk(s,r.PlaylistItemMarkerId); if (mk==null) continue;
-        const key=JSON.stringify([mk,r.MepsDocumentId,r.ParagraphIndex,r.MarkerIndexWithinParagraph]);
-        if (seen.has(key)) continue; seen.add(key);
-        this.ins('INSERT INTO PlaylistItemMarkerParagraphMap(PlaylistItemMarkerId,MepsDocumentId,ParagraphIndex,MarkerIndexWithinParagraph) VALUES(?,?,?,?)',
-          [mk,r.MepsDocumentId,r.ParagraphIndex,r.MarkerIndexWithinParagraph]);
-        count++;
-      }
-    return count;
-  }
-
-  mergeLastModified() {
-    const all = [this.db1,this.db2].flatMap(db => this.rows(db,'LastModified').map(r=>r.LastModified)).filter(Boolean).sort();
-    this.ins('INSERT INTO LastModified(LastModified) VALUES(?)', [all.length ? all.pop() : new Date().toISOString()]);
-    return 1;
-  }
-
-  mergeMigrations() {
-    const seen = new Set();
-    for (const db of [this.db1,this.db2])
-      for (const r of this.rows(db,'grdb_migrations'))
-        if (!seen.has(r.identifier)) {
-          seen.add(r.identifier);
-          this.ins('INSERT INTO grdb_migrations(identifier) VALUES(?)',[r.identifier]);
+      mergeTagMap() {
+        const seen = new Set();
+        const rows = [];
+        for (const [s, db] of [['1', this.db1], ['2', this.db2]])
+          for (const r of this.rows(db, 'TagMap')) {
+            const tag = this.rtag(s, r.TagId); if (tag == null) continue;
+            const note = this.rnote(s, r.NoteId), loc = this.rloc(s, r.LocationId), pl = this.rpl(s, r.PlaylistItemId);
+            const key = JSON.stringify([pl, loc, note, tag]); if (seen.has(key)) continue; seen.add(key);
+            rows.push({ pl, loc, note, tag });
+          }
+        const posCounter = new Map();
+        let nxt = 1;
+        for (const { pl, loc, note, tag } of rows) {
+          const pos = posCounter.get(tag) ?? 0;
+          posCounter.set(tag, pos + 1);
+          this.ins('INSERT INTO TagMap(TagMapId,PlaylistItemId,LocationId,NoteId,TagId,Position) VALUES(?,?,?,?,?,?)',
+            [nxt++, pl, loc, note, tag, pos]);
         }
-    return seen.size;
-  }
+        return nxt - 1;
+      }
 
-  copyExtraFiles() {
-    const skip = new Set(['manifest.json', 'userData.db']);
-    const done = new Set(Object.keys(this.outFiles));
-    for (const zip of [this.zip1, this.zip2])
-      for (const [name, data] of Object.entries(zip))
-        if (!skip.has(name) && !done.has(name)) { this.outFiles[name] = data; done.add(name); }
-  }
+      mergePlMediaMap() {
+        const seen = new Set(); let count = 0;
+        for (const [s, db] of [['1', this.db1], ['2', this.db2]])
+          for (const r of this.rows(db, 'PlaylistItemIndependentMediaMap')) {
+            const pl = this.rpl(s, r.PlaylistItemId), m = this.rmdia(s, r.IndependentMediaId);
+            if (pl == null || m == null) continue;
+            const key = `${pl}:${m}`; if (seen.has(key)) continue; seen.add(key);
+            this.ins('INSERT INTO PlaylistItemIndependentMediaMap(PlaylistItemId,IndependentMediaId,DurationTicks) VALUES(?,?,?)', [pl, m, r.DurationTicks]);
+            count++;
+          }
+        return count;
+      }
 
-  async package(name) {
-    const dbData = this.out.export();
-    const hashBuf = await crypto.subtle.digest('SHA-256', dbData);
-    const hash = Array.from(new Uint8Array(hashBuf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-    const now = new Date().toISOString();
-    const manifest = {
-      name, version: this.m1.version ?? 1,
-      userDataBackup: { deviceName: 'merged', hash, databaseName: 'userData.db', lastModifiedDate: now, schemaVersion: this.m1.userDataBackup.schemaVersion },
-      type: this.m1.type ?? 0, creationDate: now,
-    };
-    const zipIn = {
-      'userData.db':   [dbData, {level: 6}],
-      'manifest.json': [new TextEncoder().encode(JSON.stringify(manifest, null, 2)), {level: 6}],
-    };
-    for (const [n,d] of Object.entries(this.outFiles)) zipIn[n] = [d, {level: 6}];
-    return fflate.zipSync(zipIn);
-  }
-}
-</script>
+      mergePlLocationMap() {
+        const seen = new Set(); let count = 0;
+        for (const [s, db] of [['1', this.db1], ['2', this.db2]])
+          for (const r of this.rows(db, 'PlaylistItemLocationMap')) {
+            const pl = this.rpl(s, r.PlaylistItemId), loc = this.rloc(s, r.LocationId);
+            if (pl == null || loc == null) continue;
+            const key = `${pl}:${loc}`; if (seen.has(key)) continue; seen.add(key);
+            this.ins('INSERT INTO PlaylistItemLocationMap(PlaylistItemId,LocationId,MajorMultimediaType,BaseDurationTicks) VALUES(?,?,?,?)', [pl, loc, r.MajorMultimediaType, r.BaseDurationTicks]);
+            count++;
+          }
+        return count;
+      }
+
+      mergePlMarkers() {
+        const keyId = new Map(); let nxt = 1;
+        for (const [s, db] of [['1', this.db1], ['2', this.db2]])
+          for (const r of this.rows(db, 'PlaylistItemMarker')) {
+            const pl = this.rpl(s, r.PlaylistItemId); if (pl == null) continue;
+            const key = JSON.stringify([pl, r.Label, r.StartTimeTicks]);
+            if (!keyId.has(key)) {
+              keyId.set(key, nxt);
+              this.ins('INSERT INTO PlaylistItemMarker(PlaylistItemMarkerId,PlaylistItemId,Label,StartTimeTicks,DurationTicks,EndTransitionDurationTicks) VALUES(?,?,?,?,?,?)',
+                [nxt, pl, r.Label, r.StartTimeTicks, r.DurationTicks, r.EndTransitionDurationTicks]);
+              nxt++;
+            }
+            this.plmk.set(this.k(s, r.PlaylistItemMarkerId), keyId.get(key));
+          }
+        return nxt - 1;
+      }
+
+      mergePlMarkerVerseMap() {
+        const seen = new Set(); let count = 0;
+        for (const [s, db] of [['1', this.db1], ['2', this.db2]])
+          for (const r of this.rows(db, 'PlaylistItemMarkerBibleVerseMap')) {
+            const mk = this.rplmk(s, r.PlaylistItemMarkerId); if (mk == null) continue;
+            const key = `${mk}:${r.VerseId}`; if (seen.has(key)) continue; seen.add(key);
+            this.ins('INSERT INTO PlaylistItemMarkerBibleVerseMap(PlaylistItemMarkerId,VerseId) VALUES(?,?)', [mk, r.VerseId]);
+            count++;
+          }
+        return count;
+      }
+
+      mergePlMarkerParaMap() {
+        const seen = new Set(); let count = 0;
+        for (const [s, db] of [['1', this.db1], ['2', this.db2]])
+          for (const r of this.rows(db, 'PlaylistItemMarkerParagraphMap')) {
+            const mk = this.rplmk(s, r.PlaylistItemMarkerId); if (mk == null) continue;
+            const key = JSON.stringify([mk, r.MepsDocumentId, r.ParagraphIndex, r.MarkerIndexWithinParagraph]);
+            if (seen.has(key)) continue; seen.add(key);
+            this.ins('INSERT INTO PlaylistItemMarkerParagraphMap(PlaylistItemMarkerId,MepsDocumentId,ParagraphIndex,MarkerIndexWithinParagraph) VALUES(?,?,?,?)',
+              [mk, r.MepsDocumentId, r.ParagraphIndex, r.MarkerIndexWithinParagraph]);
+            count++;
+          }
+        return count;
+      }
+
+      mergeLastModified() {
+        const all = [this.db1, this.db2].flatMap(db => this.rows(db, 'LastModified').map(r => r.LastModified)).filter(Boolean).sort();
+        this.ins('INSERT INTO LastModified(LastModified) VALUES(?)', [all.length ? all.pop() : new Date().toISOString()]);
+        return 1;
+      }
+
+      mergeMigrations() {
+        const seen = new Set();
+        for (const db of [this.db1, this.db2])
+          for (const r of this.rows(db, 'grdb_migrations'))
+            if (!seen.has(r.identifier)) {
+              seen.add(r.identifier);
+              this.ins('INSERT INTO grdb_migrations(identifier) VALUES(?)', [r.identifier]);
+            }
+        return seen.size;
+      }
+
+      copyExtraFiles() {
+        const skip = new Set(['manifest.json', 'userData.db']);
+        const done = new Set(Object.keys(this.outFiles));
+        for (const zip of [this.zip1, this.zip2])
+          for (const [name, data] of Object.entries(zip))
+            if (!skip.has(name) && !done.has(name)) { this.outFiles[name] = data; done.add(name); }
+      }
+
+      async package(name) {
+        const dbData = this.out.export();
+        const hashBuf = await crypto.subtle.digest('SHA-256', dbData);
+        const hash = Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, '0')).join('');
+        const now = new Date().toISOString();
+        const manifest = {
+          name, version: this.m1.version ?? 1,
+          userDataBackup: { deviceName: 'merged', hash, databaseName: 'userData.db', lastModifiedDate: now, schemaVersion: this.m1.userDataBackup.schemaVersion },
+          type: this.m1.type ?? 0, creationDate: now,
+        };
+        const zipIn = {
+          'userData.db': [dbData, { level: 6 }],
+          'manifest.json': [new TextEncoder().encode(JSON.stringify(manifest, null, 2)), { level: 6 }],
+        };
+        for (const [n, d] of Object.entries(this.outFiles)) zipIn[n] = [d, { level: 6 }];
+        return fflate.zipSync(zipIn);
+      }
+    }
+  </script>
 </body>
+
 </html>
