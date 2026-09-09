@@ -50,5 +50,5 @@ https://para0056.github.io/jwl-backup-merge/
 - Uses [sql.js](https://github.com/sql-js/sql.js) (SQLite compiled to WebAssembly) for in-browser SQLite
 - Uses [fflate](https://github.com/101arrowz/fflate) for ZIP read/write
 - Both libraries load from cdnjs on first use (~1 MB total); requires internet access
-- Compatible with JW Library backup schema v14 (tested); validates schema version
+- Compatible with JW Library backup schema v14–v16 (tested); validates schema version
   match between the two files before merging

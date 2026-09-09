@@ -894,11 +894,11 @@
         const keyId = new Map(); let nxt = 1;
         for (const [s, db] of [['1', this.db1], ['2', this.db2]])
           for (const r of this.rows(db, 'Location')) {
-            const k = JSON.stringify([r.KeySymbol, r.MepsLanguage, r.BookNumber, r.ChapterNumber, r.DocumentId, r.Track, r.IssueTagNumber, r.Type]);
+            const k = JSON.stringify([r.KeySymbol, r.MepsLanguage, r.BookNumber, r.ChapterNumber, r.DocumentId, r.Track, r.IssueTagNumber, r.Type, r.Specialty, r.Edition]);
             if (!keyId.has(k)) {
               keyId.set(k, nxt);
-              this.ins('INSERT INTO Location(LocationId,BookNumber,ChapterNumber,DocumentId,Track,IssueTagNumber,KeySymbol,MepsLanguage,Type,Title) VALUES(?,?,?,?,?,?,?,?,?,?)',
-                [nxt, r.BookNumber, r.ChapterNumber, r.DocumentId, r.Track, r.IssueTagNumber, r.KeySymbol, r.MepsLanguage, r.Type, r.Title]);
+              this.ins('INSERT INTO Location(LocationId,BookNumber,ChapterNumber,DocumentId,Track,IssueTagNumber,KeySymbol,MepsLanguage,Type,Title,Specialty,Edition) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',
+                [nxt, r.BookNumber, r.ChapterNumber, r.DocumentId, r.Track, r.IssueTagNumber, r.KeySymbol, r.MepsLanguage, r.Type, r.Title, r.Specialty, r.Edition]);
               nxt++;
             }
             this.loc.set(this.k(s, r.LocationId), keyId.get(k));
