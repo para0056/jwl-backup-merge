@@ -859,9 +859,38 @@
         for (const [sql] of r[0].values) try { this.out.run(sql); } catch { }
       }
 
+      // Real schema version of a database. JW Library writes PRAGMA user_version
+      // into the manifest's schemaVersion. A database from an older merge can have
+      // user_version 0, so fall back to the highest grdb_migrations entry ("v16").
+      dbSchemaVersion(db) {
+        const uv = db.exec('PRAGMA user_version')[0]?.values[0][0] ?? 0;
+        if (uv) return uv;
+        const ids = this.rows(db, 'grdb_migrations').map(r => parseInt(String(r.identifier).replace(/^v/, ''), 10)).filter(n => !isNaN(n));
+        return ids.length ? Math.max(...ids) : 0;
+      }
+
+      // Recreate the app's triggers (they keep the LastModified table current).
+      // Run this AFTER all inserts: one trigger blocks INSERT INTO LastModified,
+      // and the others would overwrite LastModified with the merge time.
+      // Take the union from both files, because a file from an older merge has none.
+      copyTriggers() {
+        const seen = new Set(); let n = 0;
+        for (const db of [this.db1, this.db2]) {
+          const r = db.exec("SELECT name, sql FROM sqlite_master WHERE type = 'trigger' AND sql IS NOT NULL");
+          if (!r.length) continue;
+          for (const [name, sql] of r[0].values) {
+            if (seen.has(name)) continue;
+            seen.add(name);
+            try { this.out.run(sql); n++; } catch { }
+          }
+        }
+        return n;
+      }
+
       run() {
-        const v1 = this.m1.userDataBackup.schemaVersion;
-        const v2 = this.m2.userDataBackup.schemaVersion;
+        const v1 = this.dbSchemaVersion(this.db1);
+        const v2 = this.dbSchemaVersion(this.db2);
+        this.schemaVersion = Math.max(v1, v2);
         if (v1 && v2 && v1 !== v2) throw new Error(`These two backups are from different app versions (${v1} vs ${v2}). Please update JW Library on both devices and make new backups before merging.`);
         this.copySchema();
 
@@ -887,6 +916,8 @@
         ];
 
         for (const [name, fn] of steps) logRow(name, fn());
+        logRow('App triggers', this.copyTriggers());
+        this.out.run(`PRAGMA user_version = ${this.schemaVersion | 0}`);
         this.copyExtraFiles();
       }
 
@@ -1164,7 +1195,7 @@
         const now = new Date().toISOString();
         const manifest = {
           name, version: this.m1.version ?? 1,
-          userDataBackup: { deviceName: 'merged', hash, databaseName: 'userData.db', lastModifiedDate: now, schemaVersion: this.m1.userDataBackup.schemaVersion },
+          userDataBackup: { deviceName: 'merged', hash, databaseName: 'userData.db', lastModifiedDate: now, schemaVersion: this.schemaVersion },
           type: this.m1.type ?? 0, creationDate: now,
         };
         const zipIn = {
